@@ -1,0 +1,54 @@
+---
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka-server
+  profiles: peer1
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+  server:
+    enable-self-preservation: false
+    use-read-only-response-cache: false
+    eviction-interval-timer-in-ms: 5000
+---
+server:
+  port: 8762
+spring:
+  application:
+    name: eureka-server
+  profiles: peer2
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8763/eureka/
+  server:
+    enable-self-preservation: false
+    use-read-only-response-cache: false
+    eviction-interval-timer-in-ms: 5000
+---
+server:
+  port: 8763
+spring:
+  application:
+    name: eureka-server
+  profiles: peer3
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/
+  server:
+    enable-self-preservation: false
+    use-read-only-response-cache: false
+    eviction-interval-timer-in-ms: 5000
