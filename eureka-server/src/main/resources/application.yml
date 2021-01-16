@@ -16,6 +16,7 @@ eureka:
     enable-self-preservation: false
     use-read-only-response-cache: false
     eviction-interval-timer-in-ms: 5000
+    response-cache-auto-expiration-in-seconds: 60
 ---
 server:
   port: 8762
