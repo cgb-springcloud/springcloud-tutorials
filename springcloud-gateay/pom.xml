@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>springcloud-gateway</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <groupId>org.springframework.boot</groupId>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <artifactId>spring-cloud-starter-gateway</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+    </dependency>
+    <!--    <dependency>-->
+    <!--      <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
+    <!--      <groupId>org.springframework.cloud</groupId>-->
+    <!--    </dependency>-->
+  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <groupId>org.springframework.cloud</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <description>springcloud-gateway</description>
+  <groupId>vip.codehome</groupId>
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>springcloud-gateway</name>
+
+  <parent>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <relativePath/>
+    <version>2.3.5.RELEASE</version> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+  </properties>
+
+  <version>0.0.1-SNAPSHOT</version>
+
+</project>
