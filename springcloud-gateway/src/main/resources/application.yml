@@ -27,3 +27,6 @@ ribbon:
   ConnectTimeout: 50000
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 1
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

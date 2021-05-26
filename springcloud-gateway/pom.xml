@@ -28,6 +28,11 @@
     <!--      <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
     <!--      <groupId>org.springframework.cloud</groupId>-->
     <!--    </dependency>-->
+    <dependency>
+      <artifactId>core</artifactId>
+      <groupId>io.github.mytianya</groupId>
+      <version>1.2.1</version>
+    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>
