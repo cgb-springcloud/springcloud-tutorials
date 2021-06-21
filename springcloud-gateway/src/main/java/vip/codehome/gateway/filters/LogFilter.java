@@ -26,12 +26,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import vip.codehome.gateway.domain.AccessRecord;
 
-/**
- * @author zyw
- * @mail dsyslove@163.com
- * @createtime 2021/5/25--15:39
- * @description
- */
 @Component
 public class LogFilter implements GlobalFilter, Ordered {
 

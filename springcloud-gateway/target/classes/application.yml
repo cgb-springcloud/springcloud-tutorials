@@ -22,11 +22,16 @@ eureka:
     eureka-server-connect-timeout-seconds: 10
     eureka-server-read-timeout-seconds: 20
     registry-fetch-interval-seconds: 10
-ribbon:
-  ReadTimeout: 50000
-  ConnectTimeout: 50000
-  MaxAutoRetries: 0
-  MaxAutoRetriesNextServer: 1
+#ribbon:
+#  ReadTimeout: 50000
+#  ConnectTimeout: 50000
+#  MaxAutoRetries: 0
+#  MaxAutoRetriesNextServer: 1
 logging:
   level:
     org.springframework.cloud.gateway: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

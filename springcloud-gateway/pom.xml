@@ -3,6 +3,7 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>springcloud-gateway</artifactId>
+
   <build>
     <plugins>
       <plugin>
@@ -33,6 +34,11 @@
       <groupId>io.github.mytianya</groupId>
       <version>1.2.1</version>
     </dependency>
+    <!--暴露spring cloud gateway的管理端口-->
+    <dependency>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>
@@ -47,6 +53,7 @@
   </dependencyManagement>
   <description>springcloud-gateway</description>
   <groupId>vip.codehome</groupId>
+
   <modelVersion>4.0.0</modelVersion>
 
   <name>springcloud-gateway</name>
@@ -62,7 +69,5 @@
     <java.version>1.8</java.version>
     <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
   </properties>
-
   <version>0.0.1-SNAPSHOT</version>
-
 </project>

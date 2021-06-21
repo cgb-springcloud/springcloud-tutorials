@@ -7,12 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-/**
- * @author zyw
- * @mail dsyslove@163.com
- * @createtime 2021/5/25--11:15
- * @description
- */
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
   @Override

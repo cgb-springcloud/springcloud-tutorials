@@ -3,12 +3,6 @@ package vip.codehome.gateway.domain;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
-/**
- * @author zyw
- * @mail dsyslove@163.com
- * @createtime 2021/5/25--15:42
- * @description
- */
 public class AccessRecord {
   String path;
   String schema;
