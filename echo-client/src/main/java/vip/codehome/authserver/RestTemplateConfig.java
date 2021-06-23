@@ -1,4 +1,4 @@
-package vip.codehome.echoclient;
+package vip.codehome.authserver;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

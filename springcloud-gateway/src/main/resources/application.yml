@@ -18,7 +18,7 @@ eureka:
     ip-address: 192.28.4.17
   client:
     serviceUrl:
-      defaultZone: http://192.28.4.23:8761/eureka/,http://192.28.4.24:8761/eureka/,http://192.28.4.25:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
     eureka-server-connect-timeout-seconds: 10
     eureka-server-read-timeout-seconds: 20
     registry-fetch-interval-seconds: 10

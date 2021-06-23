@@ -1,7 +1,8 @@
-package vip.codehome.echoclient;
+package vip.codehome.authserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
@@ -9,10 +10,11 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @SpringBootApplication
 @EnableEurekaClient
-public class EchoClientApplication {
+@EnableCircuitBreaker
+public class AuthServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EchoClientApplication.class, args);
+        SpringApplication.run(AuthServerApplication.class, args);
     }
 
 }
