@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
  **/
 @RestController
 public class EurekaController {
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
     @Autowired
     DiscoveryClient discoveryClient;
     @Autowired
@@ -45,6 +49,11 @@ public class EurekaController {
     public void listServices(String serviceId){
         List<ServiceInstance> serviceInstances=discoveryClient.getInstances(serviceId);
         serviceInstances= eurekaDiscoveryClient.getInstances(serviceId);
+    }
+    @GetMapping("/loadbalancer")
+    public void loadbalancer(){
+        ServiceInstance serviceInstance=loadBalancerClient.choose("test");
+        String url=String.format("http://%s:%s/server/get",serviceInstance.getHost(),serviceInstance.getPort());
     }
     @Autowired
     RestTemplate restTemplate;
