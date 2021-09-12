@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  shutdown: graceful
+spring:
+  application:
+    name: echo-client
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.28.4.23:8761/eureka/,http://192.28.4.24:8761/eureka/,http://192.28.4.25:8761/eureka/
+    registry-fetch-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+    instance-id: 127.0.0.1:${server.port}
+management:
+  endpoint:
+    pause:
+      enabled: true
+    restart:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: pause,restart
