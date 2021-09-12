@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 /***
  * 需要通过spring.cloud.routes.filters 配置在具体路由下，只作用在当前路由上或通过spring.cloud.default-filters配置在全局，作用在所有路由上
  */
-@Component
+//@Component
 public class RequestTimeFilter implements GlobalFilter, Ordered {
   private static final String START_TIME_TAG = "start_time_tag";
 

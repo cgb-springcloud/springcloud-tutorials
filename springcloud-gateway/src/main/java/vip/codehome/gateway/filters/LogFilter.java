@@ -26,7 +26,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import vip.codehome.gateway.domain.AccessRecord;
 
-@Component
+//@Component
 public class LogFilter implements GlobalFilter, Ordered {
 
   private static final String START_TIME = "startTime";

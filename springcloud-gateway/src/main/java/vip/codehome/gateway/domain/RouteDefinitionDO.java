@@ -11,7 +11,7 @@ import lombok.Data;
  * @author dsys
  * @version v1.0
  */
-@Table(name = "IMF_ROUTE_DEFINITION")
+@Table(name = "ROUTE_DEFINITION")
 @Data
 public class RouteDefinitionDO {
   @Id
