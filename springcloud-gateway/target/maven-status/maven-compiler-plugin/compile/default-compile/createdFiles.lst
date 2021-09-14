@@ -1,3 +1,13 @@
-vip\codehome\gateway\Gateway.class
-vip\codehome\gateway\filters\AuthGlobalFilter.class
+vip\codehome\gateway\utils\AuthHelper.class
+vip\codehome\gateway\handler\JsonExceptionHandler.class
+vip\codehome\gateway\filters\LogFilter$1.class
+vip\codehome\gateway\filters\LogFilter.class
+vip\codehome\gateway\service\RouteDefinitionService.class
+vip\codehome\common\Constants.class
 vip\codehome\gateway\filters\RequestTimeFilter.class
+vip\codehome\gateway\handler\ErrorHandlerConfiguration.class
+vip\codehome\gateway\Gateway.class
+vip\codehome\gateway\domain\AccessRecord.class
+vip\codehome\gateway\routes\DBRouteDefinitionRepository.class
+vip\codehome\gateway\domain\RouteDefinitionDO.class
+vip\codehome\gateway\filters\AuthGlobalFilter.class

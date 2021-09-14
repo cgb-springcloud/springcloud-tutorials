@@ -2,6 +2,7 @@ package vip.codehome.gateway.handler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
@@ -14,7 +15,10 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.reactive.function.BodyInserters;
 
+import reactor.core.publisher.Mono;
+import org.springframework.http.MediaType;
 public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
     public JsonExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
             ErrorProperties errorProperties, ApplicationContext applicationContext) {
@@ -42,9 +46,22 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
         return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);
     }
     protected int getHttpStatus(Map<String, Object> errorAttributes) {
-        int statusCode = (int) errorAttributes.get("status");
-        return statusCode;
+        HttpStatus status = (HttpStatus) errorAttributes.get("status");
+        if (Objects.isNull(status)) {
+            return HttpStatus.OK.value();
+        }
+        return status.value();
     }
+    @SuppressWarnings("deprecation")
+	@Override
+    protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
+        boolean includeStackTrace = isIncludeStackTrace(request, MediaType.ALL);
+        Map<String, Object> error = getErrorAttributes(request, includeStackTrace);
+        return ServerResponse
+                .status(getHttpStatus(error))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(BodyInserters.fromObject(error));
+        }
     /**
      * 构建异常信息
      *

@@ -2,6 +2,9 @@ package vip.codehome.authserver;
 
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Applications;
+
+import vip.codehome.common.AuthHelper;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -38,8 +41,9 @@ public class EurekaController {
     }
     @GetMapping("/up")
     public String up(){
+    	System.out.println(AuthHelper.getToken());
         eurekaAutoServiceRegistration.start();
-        return "up";
+        return AuthHelper.getToken();
     }
     @GetMapping("/op")
     public Applications op(String op){

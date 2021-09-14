@@ -18,7 +18,7 @@
   </parent>
   <properties>
     <java.version>1.8</java.version>
-    <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+    <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
   </properties>
   <version>0.0.1-SNAPSHOT</version>
   <build>

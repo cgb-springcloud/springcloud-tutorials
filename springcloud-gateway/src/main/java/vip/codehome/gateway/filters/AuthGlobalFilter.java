@@ -34,19 +34,19 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 		  log.error(e.getMessage());
 	  }
 	  log.info("开始写cookie到客户端");
-	    exchange
-	    .getResponse()
-	    .getCookies()
-	    .set(
-	    		Constants.TOKEN_KEY,
-	        ResponseCookie.from(
-	        		Constants.TOKEN_KEY,
-	                "haha")
-	            .domain("192.28.4.3")
-	          //  .domain("192.28.4.4")
-	            .path("/")
-	            .maxAge(-1)
-	            .build());
+//	    exchange
+//	    .getResponse()
+//	    .getCookies()
+//	    .set(
+//	    		Constants.TOKEN_KEY,
+//	        ResponseCookie.from(
+//	        		Constants.TOKEN_KEY,
+//	                "haha")
+//	            .domain("127.0.0.1")
+//	          //  .domain("192.28.4.4")
+//	            .path("/")
+//	            .maxAge(-1)
+//	            .build());
     return chain.filter(exchange);
   }
 
