@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
   shutdown: graceful
 spring:
   application:
@@ -9,11 +9,12 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://192.28.4.23:8761/eureka/,http://192.28.4.24:8761/eureka/,http://192.28.4.25:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
     registry-fetch-interval-seconds: 10
   instance:
     prefer-ip-address: true
-    instance-id: 127.0.0.1:${server.port}
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${eureka.instance.ip-address}:${server.port}
 management:
   endpoint:
     pause:

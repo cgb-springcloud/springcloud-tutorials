@@ -1,0 +1,39 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: false
+    loadbalancer:
+      ribbon:
+        enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    eureka-server-connect-timeout-seconds: 10
+    eureka-server-read-timeout-seconds: 20
+    registry-fetch-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${eureka.instance.ip-address}:${server.port}
+ribbon:
+  ReadTimeout: 50000
+  ConnectTimeout: 50000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+    vip.codehome.gateway: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

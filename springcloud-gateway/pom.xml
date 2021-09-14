@@ -3,7 +3,24 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>springcloud-gateway</artifactId>
+  <description>springcloud-gateway</description>
+  <groupId>vip.codehome</groupId>
 
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>springcloud-gateway</name>
+
+  <parent>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <relativePath/>
+    <version>2.3.5.RELEASE</version> <!-- lookup parent from repository -->
+  </parent>
+  <properties>
+    <java.version>1.8</java.version>
+    <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+  </properties>
+  <version>0.0.1-SNAPSHOT</version>
   <build>
     <plugins>
       <plugin>
@@ -56,23 +73,5 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <description>springcloud-gateway</description>
-  <groupId>vip.codehome</groupId>
 
-  <modelVersion>4.0.0</modelVersion>
-
-  <name>springcloud-gateway</name>
-
-  <parent>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <groupId>org.springframework.boot</groupId>
-    <relativePath/>
-    <version>2.3.5.RELEASE</version> <!-- lookup parent from repository -->
-  </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
-  </properties>
-  <version>0.0.1-SNAPSHOT</version>
 </project>

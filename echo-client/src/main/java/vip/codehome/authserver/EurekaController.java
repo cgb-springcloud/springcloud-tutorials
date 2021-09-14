@@ -55,10 +55,10 @@ public class EurekaController {
         ServiceInstance serviceInstance=loadBalancerClient.choose("test");
         String url=String.format("http://%s:%s/server/get",serviceInstance.getHost(),serviceInstance.getPort());
     }
-    @Autowired
-    RestTemplate restTemplate;
-    @GetMapping("/gracefuldown")
-    public String testDown(){
-     return    restTemplate.getForObject("http://echo-server/echo?msg=client",String.class);
-    }
+//    @Autowired
+//    RestTemplate restTemplate;
+//    @GetMapping("/gracefuldown")
+//    public String testDown(){
+//     return    restTemplate.getForObject("http://echo-server/echo?msg=client",String.class);
+//    }
 }
