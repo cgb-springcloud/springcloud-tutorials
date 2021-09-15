@@ -20,10 +20,10 @@ public class RestTemplateConfiguration {
 		restTemplate.setInterceptors(Collections.singletonList(interceptor));
 		return restTemplate;
 	}
-	@Bean
-	public RequestContextFilter requestContextFilter(){
-	    RequestContextFilter requestContextFilter = new RequestContextFilter();
-	    requestContextFilter.setThreadContextInheritable(true);
-	    return requestContextFilter;
-	}
+//	@Bean
+//	public RequestContextFilter requestContextFilter(){
+//	    RequestContextFilter requestContextFilter = new RequestContextFilter();
+//	    requestContextFilter.setThreadContextInheritable(true);
+//	    return requestContextFilter;
+//	}
 }
