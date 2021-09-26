@@ -77,7 +77,9 @@
                     <!-- 指定 Dockerfile 路径-->
                     <dockerDirectory>${project.basedir}</dockerDirectory>
                     <!--指定远程docker环境地址-->
-                    <dockerHost>http://127.0.0.1:2375</dockerHost>
+                    <dockerHost>https://101.35.123.122:2376</dockerHost>
+                    <!--docker远程ca地址-->
+                    <dockerCertPath>D:\\certs\\</dockerCertPath>
                     <!-- 复制jar包到docker容器指定目录配置 -->
                     <resources>
                         <resource>
