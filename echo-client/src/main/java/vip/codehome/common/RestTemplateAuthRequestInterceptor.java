@@ -26,6 +26,7 @@ public class RestTemplateAuthRequestInterceptor implements ClientHttpRequestInte
 			while(headerNames.hasMoreElements()) {
 				String name=headerNames.nextElement();
 				String values=req.getHeader(name);
+				System.out.println(name+","+values);
 				request.getHeaders().add(name, values);
 			}
 		}

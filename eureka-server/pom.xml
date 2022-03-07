@@ -55,8 +55,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
-
-                将插件绑定在某个phase执行
+                <!--将插件绑定在某个phase执行-->
                 <executions>
                     <execution>
                         <id>build-image</id>
@@ -69,18 +68,15 @@
                 </executions>
 
                 <configuration>
-                    指定生成的镜像名
                     <imageName>${project.artifactId}</imageName>
-                    指定标签
                     <imageTags>
                         <imageTag>latest</imageTag>
                     </imageTags>
-
-                    指定 Dockerfile 路径
                     <dockerDirectory>${project.basedir}</dockerDirectory>
-                    指定远程docker环境地址
                     <dockerHost>http://192.168.1.5:2375</dockerHost>
-                    复制jar包到docker容器指定目录配置
+                    <!--docker远程ca地址-->
+                    <dockerCertPath>D:\\certs\\</dockerCertPath>
+                    <!-- 复制jar包到docker容器指定目录配置 -->
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

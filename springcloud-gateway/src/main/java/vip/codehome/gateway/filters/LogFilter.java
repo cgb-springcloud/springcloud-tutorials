@@ -26,7 +26,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import vip.codehome.gateway.domain.AccessRecord;
 
-//@Component
+@Component
 public class LogFilter implements GlobalFilter, Ordered {
 
   private static final String START_TIME = "startTime";
@@ -36,56 +36,60 @@ public class LogFilter implements GlobalFilter, Ordered {
 
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+	try {
+	    ServerHttpRequest request = exchange.getRequest();
+	    // 请求路径
+	    String path = request.getPath().pathWithinApplication().value();
+	    // 请求schema: http/https
+	    String scheme = request.getURI().getScheme();
+	    // 请求方法
+	    HttpMethod method = request.getMethod();
+	    // 路由服务地址
+	    URI targetUri = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
+	    // 请求头
+	    HttpHeaders headers = request.getHeaders();
+	    // 设置startTime
+	    exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
+	    // 获取请求地址
+	    InetSocketAddress remoteAddress = request.getRemoteAddress();
 
-    ServerHttpRequest request = exchange.getRequest();
-    // 请求路径
-    String path = request.getPath().pathWithinApplication().value();
-    // 请求schema: http/https
-    String scheme = request.getURI().getScheme();
-    // 请求方法
-    HttpMethod method = request.getMethod();
-    // 路由服务地址
-    URI targetUri = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
-    // 请求头
-    HttpHeaders headers = request.getHeaders();
-    // 设置startTime
-    exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
-    // 获取请求地址
-    InetSocketAddress remoteAddress = request.getRemoteAddress();
+	    MultiValueMap<String, String> formData = null;
 
-    MultiValueMap<String, String> formData = null;
+	    AccessRecord accessRecord = new AccessRecord();
+	    accessRecord.setPath(path);
+	    accessRecord.setSchema(scheme);
+	    accessRecord.setMethod(method.name());
+	    accessRecord.setTargetUri(targetUri.toString());
+	    accessRecord.setRemoteAddress(remoteAddress.toString());
+	    accessRecord.setHeaders(headers);
 
-    AccessRecord accessRecord = new AccessRecord();
-    accessRecord.setPath(path);
-    accessRecord.setSchema(scheme);
-    accessRecord.setMethod(method.name());
-    accessRecord.setTargetUri(targetUri.toString());
-    accessRecord.setRemoteAddress(remoteAddress.toString());
-    accessRecord.setHeaders(headers);
+	    if (method == HttpMethod.GET) {
+	      formData = request.getQueryParams();
+	      accessRecord.setFormData(formData);
+	      writeAccessRecord(accessRecord);
+	    }
 
-    if (method == HttpMethod.GET) {
-      formData = request.getQueryParams();
-      accessRecord.setFormData(formData);
-      writeAccessRecord(accessRecord);
-    }
+	    if (method == HttpMethod.POST) {
+	      Mono<Void> voidMono = null;
+	      //这里报错，前端没有传content-Type
+	      if (headers.getContentType().equals(MediaType.APPLICATION_JSON)) {
+	        // JSON
+	        voidMono = readBody(exchange, chain, accessRecord);
+	      }
 
-    if (method == HttpMethod.POST) {
-      Mono<Void> voidMono = null;
-      if (headers.getContentType().equals(MediaType.APPLICATION_JSON)) {
-        // JSON
-        voidMono = readBody(exchange, chain, accessRecord);
-      }
+	      if (headers.getContentType().equals(MediaType.APPLICATION_FORM_URLENCODED)) {
+	        // x-www-form-urlencoded
+	        // voidMono = readFormData(exchange, chain, accessRecord);
+	        voidMono = readBody(exchange, chain, accessRecord);
+	      }
 
-      if (headers.getContentType().equals(MediaType.APPLICATION_FORM_URLENCODED)) {
-        // x-www-form-urlencoded
-        // voidMono = readFormData(exchange, chain, accessRecord);
-        voidMono = readBody(exchange, chain, accessRecord);
-      }
-
-      if (voidMono != null) {
-        return voidMono;
-      }
-    }
+	      if (voidMono != null) {
+	        return voidMono;
+	      }
+	    }
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
 
     return chain.filter(exchange);
   }
@@ -101,36 +105,42 @@ public class LogFilter implements GlobalFilter, Ordered {
     return DataBufferUtils.join(exchange.getRequest().getBody())
         .flatMap(
             dataBuffer -> {
-              byte[] bytes = new byte[dataBuffer.readableByteCount()];
-              dataBuffer.read(bytes);
-              DataBufferUtils.release(dataBuffer);
-              Flux<DataBuffer> cachedFlux =
-                  Flux.defer(
-                      () -> {
-                        DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-                        DataBufferUtils.retain(buffer);
-                        return Mono.just(buffer);
-                      });
+            	try {
+                    byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                    dataBuffer.read(bytes);
+                    DataBufferUtils.release(dataBuffer);
+                    Flux<DataBuffer> cachedFlux =
+                        Flux.defer(
+                            () -> {
+                              DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+                              DataBufferUtils.retain(buffer);
+                              return Mono.just(buffer);
+                            });
 
-              // 重写请求体,因为请求体数据只能被消费一次
-              ServerHttpRequest mutatedRequest =
-                  new ServerHttpRequestDecorator(exchange.getRequest()) {
-                    @Override
-                    public Flux<DataBuffer> getBody() {
-                      return cachedFlux;
-                    }
-                  };
+                    // 重写请求体,因为请求体数据只能被消费一次
+                    ServerHttpRequest mutatedRequest =
+                        new ServerHttpRequestDecorator(exchange.getRequest()) {
+                          @Override
+                          public Flux<DataBuffer> getBody() {
+                            return cachedFlux;
+                          }
+                        };
 
-              ServerWebExchange mutatedExchange = exchange.mutate().request(mutatedRequest).build();
+                    ServerWebExchange mutatedExchange = exchange.mutate().request(mutatedRequest).build();
 
-              return ServerRequest.create(mutatedExchange, messageReaders)
-                  .bodyToMono(String.class)
-                  .doOnNext(
-                      objectValue -> {
-                        accessRecord.setBody(objectValue);
-                        writeAccessRecord(accessRecord);
-                      })
-                  .then(chain.filter(mutatedExchange));
+                    return ServerRequest.create(mutatedExchange, messageReaders)
+                        .bodyToMono(String.class)
+                        .doOnNext(
+                            objectValue -> {
+                              accessRecord.setBody(objectValue);
+                              writeAccessRecord(accessRecord);
+                            })
+                        .then(chain.filter(mutatedExchange));
+            	}catch(Exception e) {
+            		e.printStackTrace();
+            		return null;
+            	}
+
             });
   }
 

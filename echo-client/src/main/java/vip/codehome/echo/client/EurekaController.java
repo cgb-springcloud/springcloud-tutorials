@@ -1,4 +1,4 @@
-package vip.codehome.authserver;
+package vip.codehome.echo.client;
 
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Applications;
