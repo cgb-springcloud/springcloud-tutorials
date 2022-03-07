@@ -1,4 +1,5 @@
 vip\codehome\gateway\utils\AuthHelper.class
+vip\codehome\gateway\routes\ApolloRoteDefinitionRepository.class
 vip\codehome\gateway\handler\JsonExceptionHandler.class
 vip\codehome\gateway\filters\LogFilter$1.class
 vip\codehome\gateway\filters\LogFilter.class
